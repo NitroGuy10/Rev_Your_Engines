@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/Sprites/arrow.png" type="Texture" id=1]
+[ext_resource path="res://assets/Objects/TutorialArrows.gd" type="Script" id=2]
+
+[node name="TutorialArrows" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="UpArrowSprite" type="Sprite" parent="."]
+position = Vector2( 0, -100 )
+scale = Vector2( 5, 5 )
+texture = ExtResource( 1 )
+
+[node name="DownArrowSprite" type="Sprite" parent="."]
+position = Vector2( 0, 100 )
+rotation = 3.14159
+scale = Vector2( 5, 5 )
+texture = ExtResource( 1 )

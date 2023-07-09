@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/Sprites/car2.png" type="Texture" id=1]
 [ext_resource path="res://assets/Objects/Player.gd" type="Script" id=2]
+[ext_resource path="res://assets/Objects/TutorialArrows.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.5, 3 )
@@ -46,5 +47,7 @@ gravity = Vector2( 0, -200 )
 initial_velocity = 45.87
 scale_amount = 13.79
 color = Color( 0.239216, 0.239216, 0.239216, 0.682353 )
+
+[node name="TutorialArrows" parent="." instance=ExtResource( 3 )]
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

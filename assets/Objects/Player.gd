@@ -3,10 +3,12 @@ extends Node2D
 onready var globals = get_node("/root/GlobalVariables")
 var gameover_scene = preload("res://assets/Objects/Gameover.tscn")
 var gameover_text_scene = preload("res://assets/Objects/GameoverText.tscn")
+var tutorial_arrows_scene = preload("res://assets/Objects/TutorialArrows.tscn")
 var position_slot = 1
 
 var is_wipeout_spinning = false
 var wipeout_velocity = 0
+var added_tutorial_arrows = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -47,6 +49,9 @@ func _process(delta):
 			position.x = globals.deltaLerp(position.x, 164, 0.9999, delta, 0.001)
 		elif globals.reset_countdown == 0:
 			position.x = 164
+			if not added_tutorial_arrows:
+				add_child(tutorial_arrows_scene.instance())
+				added_tutorial_arrows = true
 
 
 func _on_Area2D_area_entered(area):
