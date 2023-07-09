@@ -3,6 +3,7 @@ extends Node2D
 onready var globals = get_node("/root/GlobalVariables")
 var obstacle_scene = preload("res://assets/Objects/Obstacle.tscn")
 var gameover_scene = preload("res://assets/Objects/Gameover.tscn")
+var gameover_text_scene = preload("res://assets/Objects/GameoverText.tscn")
 
 var ROAD_ACCEL = 0.1
 var ideal_road_speed = -999
@@ -31,6 +32,7 @@ func _process(delta):
 	if not globals.outta_gas and not globals.resetting and not globals.gameover_screen and not globals.wipeout and fuel_percent < 0:
 		$Player/ExhaustParticles.emitting = false
 		globals.outta_gas = true
+		globals.score = round(globals.road_speed - globals.DEFAULT_ROAD_SPEED)
 	if globals.outta_gas and not globals.gameover_screen and not globals.wipeout and globals.road_speed < 10:
 		globals.gameover_screen = true
 		globals.outta_gas = false
@@ -40,6 +42,9 @@ func _process(delta):
 			outta_gas_text.get_node("AnimatedSprite").frame = 1
 			outta_gas_text.time_offset = 0.4 * i
 			add_child(outta_gas_text)
+		var gameover_text = gameover_text_scene.instance()
+		gameover_text.get_node("ScoreLabel").text = "Score: " + str(globals.score)
+		add_child(gameover_text)
 		
 	if globals.wipeout or globals.gameover_screen or globals.outta_gas:
 		globals.road_speed = globals.deltaLerp(globals.road_speed, 0, 0.9, delta)

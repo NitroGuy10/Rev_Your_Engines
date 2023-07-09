@@ -2,6 +2,7 @@ extends Node2D
 
 onready var globals = get_node("/root/GlobalVariables")
 var gameover_scene = preload("res://assets/Objects/Gameover.tscn")
+var gameover_text_scene = preload("res://assets/Objects/GameoverText.tscn")
 var position_slot = 1
 
 var is_wipeout_spinning = false
@@ -51,6 +52,7 @@ func _process(delta):
 func _on_Area2D_area_entered(area):
 	if not (globals.wipeout or globals.gameover_screen or globals.resetting):
 		if area.get_parent().causes_wipeout:
+			globals.score = round(globals.road_speed - globals.DEFAULT_ROAD_SPEED)
 			globals.wipeout = true
 			globals.outta_gas = false
 			globals.road_speed = 200
@@ -73,5 +75,9 @@ func _on_Area2D_area_entered(area):
 			var wipeout_text = gameover_scene.instance()
 			wipeout_text.time_offset = 0.4 * i
 			get_parent().add_child(wipeout_text)
+		
+		var gameover_text = gameover_text_scene.instance()
+		gameover_text.get_node("ScoreLabel").text = "Score: " + str(globals.score)
+		get_parent().add_child(gameover_text)
 		
 		
