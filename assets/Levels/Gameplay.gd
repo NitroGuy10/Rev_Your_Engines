@@ -2,6 +2,7 @@ extends Node2D
 
 onready var globals = get_node("/root/GlobalVariables")
 var obstacle_scene = preload("res://assets/Objects/Obstacle.tscn")
+var gameover_scene = preload("res://assets/Objects/Gameover.tscn")
 
 var ROAD_ACCEL = 0.1
 var ideal_road_speed = -999
@@ -27,7 +28,20 @@ func _process(delta):
 	position = globals.deltaLerp(position, Vector2(0, 0), 0.95, delta)
 	$FuelMeter.fill_percent = fuel_percent
 	
-	if globals.wipeout or globals.gameover_screen:
+	if not globals.outta_gas and not globals.resetting and not globals.gameover_screen and not globals.wipeout and fuel_percent < 0:
+		$Player/ExhaustParticles.emitting = false
+		globals.outta_gas = true
+	if globals.outta_gas and not globals.gameover_screen and not globals.wipeout and globals.road_speed < 10:
+		globals.gameover_screen = true
+		globals.outta_gas = false
+		for i in range(0, 5):
+			var outta_gas_text = gameover_scene.instance()
+			outta_gas_text.base_size = 12
+			outta_gas_text.get_node("AnimatedSprite").frame = 1
+			outta_gas_text.time_offset = 0.4 * i
+			add_child(outta_gas_text)
+		
+	if globals.wipeout or globals.gameover_screen or globals.outta_gas:
 		globals.road_speed = globals.deltaLerp(globals.road_speed, 0, 0.9, delta)
 		fuel_percent = 0
 	if globals.gameover_screen:
@@ -45,6 +59,8 @@ func _process(delta):
 		elif globals.reset_countdown == 0:
 			globals.road_speed = globals.DEFAULT_ROAD_SPEED
 			fuel_percent = 100
+	elif globals.outta_gas:
+		pass
 	else:
 		fuel_percent -= 10 * delta
 		
@@ -59,7 +75,7 @@ func _process(delta):
 
 
 func _on_ObstacleTimer_timeout():
-	if not (globals.gameover_screen or globals.resetting):
+	if not (globals.gameover_screen or globals.resetting or globals.wipeout or globals.outta_gas):
 		var is_food = (randi() % 5) == 0
 		if last_food == 4:
 			is_food = true

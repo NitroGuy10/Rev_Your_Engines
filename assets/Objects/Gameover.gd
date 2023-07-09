@@ -8,9 +8,11 @@ onready var globals = get_node("/root/GlobalVariables")
 
 var time = 0
 var time_offset = 0
+var base_size = 15
 
 var despawning = false
 var despawn_velocity = 0
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,6 +21,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
 	time += delta * 5
 	var sine = sin(time + time_offset)
 	
@@ -36,5 +39,5 @@ func _process(delta):
 		if $AnimatedSprite.scale.x < 0.001:
 			queue_free()
 	else:
-		$AnimatedSprite.scale.x = 15 + sine * 2
-		$AnimatedSprite.scale.y = 15 + sine * 2
+		$AnimatedSprite.scale.x = base_size + sine * 2
+		$AnimatedSprite.scale.y = base_size + sine * 2

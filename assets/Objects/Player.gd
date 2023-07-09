@@ -19,7 +19,7 @@ func _process(delta):
 	$ExhaustParticles.initial_velocity = globals.road_speed
 	
 	
-	if not (globals.wipeout or globals.gameover_screen or (globals.resetting and globals.reset_countdown == 2)):
+	if not (globals.wipeout or globals.gameover_screen or globals.outta_gas or (globals.resetting and globals.reset_countdown == 2)):
 		if Input.is_action_just_pressed("ui_up"):
 			position_slot = max(0, position_slot - 1)
 	#		rotation = -0.5
@@ -52,12 +52,13 @@ func _on_Area2D_area_entered(area):
 	if not (globals.wipeout or globals.gameover_screen or globals.resetting):
 		if area.get_parent().causes_wipeout:
 			globals.wipeout = true
+			globals.outta_gas = false
 			globals.road_speed = 200
 			get_parent().position.x = 20
 			
 			is_wipeout_spinning = true
 			wipeout_velocity = -500
-		if area.get_parent().is_food:
+		if area.get_parent().is_food and not globals.outta_gas:
 			area.get_parent().queue_free()
 			get_parent().fuel_percent = 100
 	elif area.name == "BottomBoundary":
