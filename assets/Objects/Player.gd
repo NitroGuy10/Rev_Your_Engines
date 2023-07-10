@@ -64,7 +64,8 @@ func _on_Area2D_area_entered(area):
 			if globals.play_sfx:
 				$SpinningOutAudio.play()
 			get_parent().get_node("GameplayMusic").stop()
-			globals.score = round(globals.road_speed - globals.DEFAULT_ROAD_SPEED)
+			if not globals.outta_gas:
+				globals.score = round(globals.road_speed - globals.DEFAULT_ROAD_SPEED)
 			globals.wipeout = true
 			globals.outta_gas = false
 			globals.road_speed = 200
