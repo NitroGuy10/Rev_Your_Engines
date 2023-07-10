@@ -18,6 +18,8 @@ var fuel_percent = 100
 func _ready():
 	$ObstacleTimer.start()
 	randomize()
+	$Gameover/AnimatedSprite.frame = 2
+	$Gameover.base_size = 12
 	
 	ideal_road_speed = globals.road_speed
 	prev_ideal_road_speed = globals.road_speed

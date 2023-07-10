@@ -5,7 +5,7 @@ extends Node2D
 # var a = 2
 # var b = "text"
 
-var fill_percent = 100
+var fill_percent = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
