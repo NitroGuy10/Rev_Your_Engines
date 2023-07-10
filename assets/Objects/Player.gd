@@ -25,9 +25,11 @@ func _process(delta):
 	if not (globals.wipeout or globals.gameover_screen or globals.outta_gas or (globals.resetting and globals.reset_countdown == 2)):
 		if Input.is_action_just_pressed("ui_up"):
 			position_slot = max(0, position_slot - 1)
+			$ChangeLanesAudio.play()
 	#		rotation = -0.5
 		elif Input.is_action_just_pressed("ui_down"):
 			position_slot = min(2, position_slot + 1)
+			$ChangeLanesAudio.play()
 	#		rotation = 0.5
 		position.y = globals.deltaLerp(position.y, 150 + (105 * position_slot), 0.9999, delta, 0.0000001)
 	if is_wipeout_spinning:
@@ -57,6 +59,8 @@ func _process(delta):
 func _on_Area2D_area_entered(area):
 	if not (globals.wipeout or globals.gameover_screen or globals.resetting):
 		if area.get_parent().causes_wipeout:
+			$SpinningOutAudio.play()
+			get_parent().get_node("GameplayMusic").stop()
 			globals.score = round(globals.road_speed - globals.DEFAULT_ROAD_SPEED)
 			globals.wipeout = true
 			globals.outta_gas = false
@@ -66,9 +70,12 @@ func _on_Area2D_area_entered(area):
 			is_wipeout_spinning = true
 			wipeout_velocity = -500
 		if area.get_parent().is_food and not globals.outta_gas:
+			$CollectFoodAudio.play()
 			area.get_parent().queue_free()
 			get_parent().fuel_percent = 100
 	elif area.name == "BottomBoundary":
+		$SpinningOutAudio.stop()
+		$CollisionAudio.play()
 		is_wipeout_spinning = false
 		$ExhaustParticles.emitting = false
 		$SmokeParticles.emitting = true

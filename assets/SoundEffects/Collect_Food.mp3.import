@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Collect_Food.mp3-d072131e948f830620a59f916d79a9ed.mp3str"
+
+[deps]
+
+source_file="res://assets/SoundEffects/Collect_Food.mp3"
+dest_files=[ "res://.import/Collect_Food.mp3-d072131e948f830620a59f916d79a9ed.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

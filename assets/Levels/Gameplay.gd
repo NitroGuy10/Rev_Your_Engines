@@ -45,6 +45,7 @@ func _process(delta):
 		var gameover_text = gameover_text_scene.instance()
 		gameover_text.get_node("ScoreLabel").text = "Score: " + str(globals.score)
 		add_child(gameover_text)
+		$GameplayMusic.stop()
 		
 	if globals.wipeout or globals.gameover_screen or globals.outta_gas:
 		globals.road_speed = globals.deltaLerp(globals.road_speed, 0, 0.9, delta)
@@ -55,17 +56,25 @@ func _process(delta):
 			globals.gameover_screen = false
 			globals.reset_countdown = 2
 			$ResetTimer.start()
+			$GameplayMusic.pitch_scale = 0.05
+			$GameplayMusic.play()
+			$GameplayMusic.volume_db = 0
 	elif globals.resetting:
 		if globals.reset_countdown == 2:
+			$GameplayMusic.pitch_scale = min(1, $GameplayMusic.pitch_scale + 2 * delta)
 			globals.road_speed = globals.deltaLerp(globals.road_speed, 2000, 0.9, delta)
 		if globals.reset_countdown == 1:
+			$GameplayMusic.pitch_scale = min(1, $GameplayMusic.pitch_scale + 2 * delta)
 			globals.road_speed = globals.deltaLerp(globals.road_speed, globals.DEFAULT_ROAD_SPEED, 0.9, delta)
 			fuel_percent = min(100, fuel_percent + 120 * delta)
 		elif globals.reset_countdown == 0:
+			$GameplayMusic.pitch_scale = 1
 			globals.road_speed = globals.DEFAULT_ROAD_SPEED
 			fuel_percent = 100
 	elif globals.outta_gas:
-		pass
+		$GameplayMusic.pitch_scale = max(0.01, $GameplayMusic.pitch_scale - 0.7 * delta)
+		if $GameplayMusic.pitch_scale < 0.1:
+			$GameplayMusic.volume_db = max(-80, $GameplayMusic.volume_db - 50 * delta)
 	else:
 		fuel_percent -= 10 * delta
 		

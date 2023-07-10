@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Change_Lanes.mp3-3de80b35b92562debcf45782050b81be.mp3str"
+
+[deps]
+
+source_file="res://assets/SoundEffects/Change_Lanes.mp3"
+dest_files=[ "res://.import/Change_Lanes.mp3-3de80b35b92562debcf45782050b81be.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

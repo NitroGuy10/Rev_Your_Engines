@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/electric_lounge.mp3-da009b326a9a9c3bbf2aa9aa1d91b78d.mp3str"
+
+[deps]
+
+source_file="res://assets/Music/electric_lounge.mp3"
+dest_files=[ "res://.import/electric_lounge.mp3-da009b326a9a9c3bbf2aa9aa1d91b78d.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=2.0
