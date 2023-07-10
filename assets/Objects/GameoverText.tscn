@@ -1,11 +1,33 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/Fonts/Pixeled.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/Objects/GameoverText.gd" type="Script" id=2]
+[ext_resource path="res://assets/Sprites/no_music.png" type="Texture" id=3]
+[ext_resource path="res://assets/Sprites/music.png" type="Texture" id=4]
+[ext_resource path="res://assets/Sprites/soundeffects.png" type="Texture" id=5]
+[ext_resource path="res://assets/Sprites/no_soundeffects.png" type="Texture" id=6]
 
 [sub_resource type="DynamicFont" id=2]
 size = 32
 font_data = ExtResource( 1 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 3 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="StyleBoxEmpty" id=5]
 
 [node name="GameoverText" type="Node2D"]
 script = ExtResource( 2 )
@@ -31,3 +53,38 @@ tab_size = 0
 text = "[ Press Enter ]"
 scroll_active = false
 deselect_on_focus_loss_enabled = false
+
+[node name="SoundControls" type="Node2D" parent="."]
+
+[node name="MusicSprite" type="AnimatedSprite" parent="SoundControls"]
+position = Vector2( 971, 40 )
+scale = Vector2( 5.14286, 5.14286 )
+frames = SubResource( 3 )
+
+[node name="SoundSprite" type="AnimatedSprite" parent="SoundControls"]
+position = Vector2( 900, 40 )
+scale = Vector2( 5.14286, 5.14286 )
+frames = SubResource( 4 )
+
+[node name="SoundButton" type="Button" parent="SoundControls"]
+margin_left = 885.0
+margin_top = 4.0
+margin_right = 926.0
+margin_bottom = 76.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+custom_styles/focus = SubResource( 5 )
+flat = true
+
+[node name="MusicButton" type="Button" parent="SoundControls"]
+margin_left = 945.0
+margin_top = 14.0
+margin_right = 997.0
+margin_bottom = 65.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+custom_styles/focus = SubResource( 5 )
+flat = true
+
+[connection signal="pressed" from="SoundControls/SoundButton" to="." method="_on_SoundButton_pressed"]
+[connection signal="pressed" from="SoundControls/MusicButton" to="." method="_on_MusicButton_pressed"]

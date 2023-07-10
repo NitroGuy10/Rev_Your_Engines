@@ -51,6 +51,7 @@ shape = SubResource( 1 )
 
 [node name="FuelMeter" parent="." instance=ExtResource( 4 )]
 position = Vector2( 73, 34 )
+z_index = 999
 
 [node name="GameplayMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )

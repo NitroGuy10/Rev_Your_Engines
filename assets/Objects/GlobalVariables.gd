@@ -10,6 +10,9 @@ var gameover_screen = true
 var resetting = false
 var reset_countdown = -1
 
+var play_music = false
+var play_sfx = true
+
 func deltaLerp(initial, final, lerp_amount, delta, base = 0.1):
 	# https://youtu.be/yGhfUcPjXuE?t=1014
 	var t = 1 - pow(base, delta * lerp_amount)

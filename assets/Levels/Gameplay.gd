@@ -59,7 +59,8 @@ func _process(delta):
 			globals.reset_countdown = 2
 			$ResetTimer.start()
 			$GameplayMusic.pitch_scale = 0.05
-			$GameplayMusic.play()
+			if globals.play_music:
+				$GameplayMusic.play()
 			$GameplayMusic.volume_db = 0
 	elif globals.resetting:
 		if globals.reset_countdown == 2:
