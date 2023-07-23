@@ -24,14 +24,14 @@ func _process(delta):
 	
 	if not (globals.wipeout or globals.gameover_screen or globals.outta_gas or (globals.resetting and globals.reset_countdown == 2)):
 		if Input.is_action_just_pressed("ui_up"):
-			position_slot = max(0, position_slot - 1)
-			if globals.play_sfx:
+			if globals.play_sfx and position_slot != 0:
 				$ChangeLanesAudio.play()
+			position_slot = max(0, position_slot - 1)
 	#		rotation = -0.5
 		elif Input.is_action_just_pressed("ui_down"):
-			position_slot = min(2, position_slot + 1)
-			if globals.play_sfx:
+			if globals.play_sfx and position_slot != 2:
 				$ChangeLanesAudio.play()
+			position_slot = min(2, position_slot + 1)
 	#		rotation = 0.5
 		position.y = globals.deltaLerp(position.y, 150 + (105 * position_slot), 0.9999, delta, 0.0000001)
 	if is_wipeout_spinning:
