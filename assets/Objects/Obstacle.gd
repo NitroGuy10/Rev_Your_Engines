@@ -23,6 +23,8 @@ func _ready():
 #func _physics_process(delta):
 func _process(delta):
 	$AnimatedSprite.position.x -= globals.road_speed * delta
+	if is_food:
+		$AnimatedSprite/SparkleParticles.emitting = true
 	
 	if position.x < -30:
 		queue_free()
